@@ -4,12 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            background-color: #F3E5F5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        body h1 {
+            color: #5E35B1;
+            margin-top: 30px;
+        }
+        .author-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .author-card {
+            border: 1px solid #5E35B1;
+            background-color: #fff;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            width: 80%;
+        }
+        .author {
+            color: #848482;
+            font-style: italic;
+            margin: 0;
+        }
+        .title {
+            margin: 0 0 8px 0;
+            color: #5E35B1;
+        }
+    </style>
 </head>
 <body>
     <h1>Book-Alchemy Library</h1>
     {% for book in books %}
-    <div>
-        <h3>{{ book.title }}</h3>
+    <div class="author-container">
+        <div class="author-card">
+            <h3 class="title">{{ book.title }}</h3>
+            <p class="author">{{ book.author.name }}</p>
+        </div>
     </div>
     {% endfor %}
 

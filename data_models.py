@@ -23,6 +23,8 @@ class Book(db.Model):
     isbn = db.Column(db.String)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
 
+    author = db.relationship('Author', backref='books')  # needed to query for author name
+
     def __repr__(self):
         return f"<Book: {self.title}>"
 
