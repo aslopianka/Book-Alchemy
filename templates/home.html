@@ -98,6 +98,19 @@
             color: #5E35B1;
             font-size: 20px;
         }
+        .delete-form {
+            margin-top: 10px;
+        }
+        .delete-button {
+            background-color: #A3485E;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +145,9 @@
                                 No Cover Available
                             </div>
                    {% endif %}
+                     <form class="delete-form" method="POST" action="/book/{{ book.id }}/delete">
+                        <button class="delete-button" type="submit">Delete</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>

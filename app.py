@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import os
 from data_models import db, Author, Book
@@ -9,6 +9,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/library.sqlite')}"
 db.init_app(app)
+app.secret_key = 'super_secret_library_key_12134'
 
 @app.route('/')
 def index():
@@ -85,6 +86,22 @@ def add_book():
         return render_template('add_book.html', authors=all_authors, message=message, error=error)
     else:
         return render_template('add_book.html', authors=all_authors)
+
+
+@app.route('/book/<int:book_id>/delete', methods=['POST'])
+# I would rather keep the author in my database even when they do not have books for easier adding of books
+def delete_book(book_id):
+
+    book_to_delete = db.session.get(Book, book_id)
+    try:
+        db.session.delete(book_to_delete)
+        db.session.commit()
+        flash(f"Book {book_to_delete.title} has been deleted from the database.", 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred when trying to delete the book: {e}", 'error')
+
+    return redirect('/')
 
 
 
