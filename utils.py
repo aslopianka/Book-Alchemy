@@ -1,0 +1,4 @@
+from datetime import datetime
+
+def parse_date(date_string):
+    return datetime.strptime(date_string, '%Y-%m-%d').date() if date_string else None
