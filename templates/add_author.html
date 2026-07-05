@@ -55,6 +55,21 @@
             font-weight: bold;
             cursor: pointer;
     }
+    .btn-row {
+        display: flex;
+        gap: 10px;
+    }
+    .home-btn {
+        background-color: #FFFFFF;
+        color: #5E35B1;
+        padding: 10px 20px;
+        border: 1px solid #5E35B1;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
     .msg-box {
         padding: 10px;
         border-radius: 10px;
@@ -78,7 +93,10 @@
         <input type="date" id="birth_date" name="birth_date" required><br><br>
         <label for="date_of_death">Date of Death:</label>
         <input type="date" id="date_of_death" name="date_of_death"><br><br>
-        <input type="submit" value="Add Author">
+        <div class="btn-row">
+            <input type="submit" value="Add Author">
+            <a href="/" class="home-btn">Home</a>
+        </div>
     </form>
     {% if message %}
         <p class="msg-box {{ 'msg-error' if error else 'msg-success' }}">
