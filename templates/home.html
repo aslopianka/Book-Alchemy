@@ -45,10 +45,28 @@
             margin: 0 0 8px 0;
             color: #5E35B1;
         }
+        .sort-form {
+            margin-top: 10px;
+            color: #5E35B1;
+        }
+        .sort-form select {
+            border: 1px solid #5E35B1;
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: #5E35B1;
+            background-color: #fff;
+        }
     </style>
 </head>
 <body>
     <h1>Book-Alchemy Library</h1>
+    <form class="sort-form" method="GET" action="/">
+        <label for="sort_by">Sort by:</label>
+        <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+            <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title</option>
+            <option value="author" {% if sort_by == 'author' %}selected{% endif %}>Author</option>
+        </select>
+    </form>
     <div class="container">
         {% for book in books %}
             <div class="card">
