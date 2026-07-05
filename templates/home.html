@@ -52,39 +52,93 @@
         .sort-form select {
             border: 1px solid #5E35B1;
             border-radius: 6px;
-            padding: 6px 10px;
             color: #5E35B1;
             background-color: #fff;
+            padding: 10px 20px;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+            gap: 16px;
+            padding: 0 20px;
+            max-width: 1200px;
+            box-sizing: border-box;
+        }
+        .top-bar input[type="text"] {
+            border: 1px solid #5E35B1;
+            border-radius: 8px;
+            color: #5E35B1;
+            background-color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            min-width: 300px;
+        }
+        button,
+        input[type="submit"] {
+            background-color: #5E35B1;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .empty-container {
+            border: 1px solid #5E35B1;
+            background-color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            color: #5E35B1;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Book-Alchemy Library</h1>
-    <form class="sort-form" method="GET" action="/">
-        <label for="sort_by">Sort by:</label>
-        <select name="sort_by" id="sort_by" onchange="this.form.submit()">
-            <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title</option>
-            <option value="author" {% if sort_by == 'author' %}selected{% endif %}>Author</option>
-        </select>
-    </form>
-    <div class="container">
-        {% for book in books %}
-            <div class="card">
-                <div>
-                    <h3 class="title">{{ book.title }}</h3>
-                    <p class="author">{{ book.author.name }}</p>
-                </div>
-               {% if book.isbn %}
-                        <img src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-S.jpg"
-                             alt="{{ book.title }} Cover"
-                             style="width: 150px; height: 220px; object-fit: cover; border-radius: 8px;">
-                    {% else %}
-                        <div style="width: 120px; height: 180px; background: #E0D7EC; border-radius: 4px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #5E35B1;">
-                            No Cover Available
-                        </div>
-               {% endif %}
-            </div>
-        {% endfor %}
+    <div class="top-bar">
+        <form class="sort-form" method="GET" action="/">
+            <label for="sort_by">Sort by:</label>
+            <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+                <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title</option>
+                <option value="author" {% if sort_by == 'author' %}selected{% endif %}>Author</option>
+            </select>
+        </form>
+        <form method="GET" action="/">
+          <input type="text" name="q" placeholder="Search books..." value="{{ q }}">
+          <button type="submit">Search</button>
+        </form>
     </div>
+    {% if books %}
+        <div class="container">
+            {% for book in books %}
+                <div class="card">
+                    <div>
+                        <h3 class="title">{{ book.title }}</h3>
+                        <p class="author">{{ book.author.name }}</p>
+                    </div>
+                   {% if book.isbn %}
+                            <img src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-S.jpg"
+                                 alt="{{ book.title }} Cover"
+                                 style="width: 150px; height: 220px; object-fit: cover; border-radius: 8px;">
+                        {% else %}
+                            <div style="width: 120px; height: 180px; background: #E0D7EC; border-radius: 4px; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #5E35B1;">
+                                No Cover Available
+                            </div>
+                   {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-container">
+            <p>Sorry, there are no books that match the search criteria</p>
+        </div>
+    {% endif %}
 </body>
 </html>

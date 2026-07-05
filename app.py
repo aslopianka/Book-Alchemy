@@ -12,17 +12,27 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    # defaults to title sorting
     sort_by = request.args.get('sort_by', 'title')
+    q = request.args.get('q', '').strip()
+
+    query = Book.query.join(Author)
+
+    if q:
+        query = query.filter(
+            db.or_(
+                Book.title.ilike(f"%{q}%"),
+                Author.name.ilike(f"%{q}%")
+            )
+        ) # db.or_ builds SQL like WHERE title LIKE '%q%' OR name LIKE '%q%'
 
     if sort_by == 'author':
-        query = Book.query.join(Author).order_by(Author.name, Book.title)
+        query = query.order_by(Author.name, Book.title)
     else:
         sort_by = 'title'
-        query = Book.query.order_by(Book.title)
+        query = query.order_by(Book.title)
 
     all_books = query.all()
-    return render_template('home.html', books=all_books, sort_by=sort_by)
+    return render_template('home.html', books=all_books, sort_by=sort_by, q=q)
 
 
 @app.route('/add_author', methods=['GET','POST'])
