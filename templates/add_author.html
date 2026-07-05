@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
+<style>
+    .msg-box {
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .msg-success {
+        background: #BFE9CF;
+        color: #3F7F5E;
+    }
+    .msg-error {
+        background: #FADBD8;
+        color: #78281F;
+    }
+</style>
 <body>
 
     <form action="/add_author" method="POST">
@@ -18,9 +32,9 @@
         <input type="submit" value="Add Author">
     </form>
     {% if message %}
-      <p>
+        <p class="msg-box {{ 'msg-error' if error else 'msg-success' }}">
             {{ message }}
-      </p>
+        </p>
     {% endif %}
 </body>
 </html>
