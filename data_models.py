@@ -1,8 +1,20 @@
+"""
+Data models for the Book-Alchemy library.
+Defines the database schema for authors and books using SQLAlchemy.
+"""
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
 class Author(db.Model):
+    """
+    Model representing an author.
+    Attributes:
+        id (int): Unique identifier.
+        name (str): Author's name.
+        birth_date (date): Date of birth.
+        date_of_death (date): Date of death.
+    """
     __tablename__ = "authors"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80))
@@ -17,6 +29,14 @@ class Author(db.Model):
 
 
 class Book(db.Model):
+    """
+    Model representing a book.
+    Attributes:
+        id (int): Unique identifier.
+        title (str): Book title.
+        isbn (str): International Standard Book Number.
+        author_id (int): ID of the author who wrote the book.
+    """
     __tablename__ = "books"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(120))

@@ -1,3 +1,7 @@
+"""
+Flask application for the Book-Alchemy library.
+Handles routes for viewing, adding, and deleting books and authors.
+"""
 from flask import Flask, request, render_template, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -13,6 +17,10 @@ app.secret_key = 'super_secret_library_key_12134'
 
 @app.route('/')
 def index():
+    """
+    Render the home page with a list of books.
+    Supports optional sorting and searching.
+    """
     sort_by = request.args.get('sort_by', 'title')
     q = request.args.get('q', '').strip()
 
@@ -38,6 +46,11 @@ def index():
 
 @app.route('/add_author', methods=['GET','POST'])
 def add_author():
+    """
+    Handle the 'Add Author' page.
+    GET: Display the form to add an author.
+    POST: Process form data and add a new author to the database.
+    """
     message = None
     error = False
     if request.method == "POST":
@@ -63,6 +76,11 @@ def add_author():
 
 @app.route('/add_book', methods=['GET','POST'])
 def add_book():
+    """
+    Handle the 'Add Book' page.
+    GET: Display the form to add a book with a list of authors.
+    POST: Process form data and add a new book to the database.
+    """
     all_authors = Author.query.all()
 
     message = None
@@ -91,7 +109,10 @@ def add_book():
 @app.route('/book/<int:book_id>/delete', methods=['POST'])
 # I would rather keep the author in my database even when they do not have books for easier adding of books
 def delete_book(book_id):
-
+    """
+    Delete a book from the database by its ID.
+    Redirects back to the home page after deletion.
+    """
     book_to_delete = db.session.get(Book, book_id)
     try:
         db.session.delete(book_to_delete)
