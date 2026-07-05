@@ -46,8 +46,12 @@
             color: #5E35B1;
         }
         .sort-form {
-            margin-top: 10px;
             color: #5E35B1;
+        }
+        .search-form {
+            display: flex;
+            gap: 10px;
+            flex: 1;
         }
         .sort-form select {
             border: 1px solid #5E35B1;
@@ -59,7 +63,7 @@
         .top-bar {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             width: 100%;
             margin-top: 20px;
             gap: 16px;
@@ -74,10 +78,12 @@
             background-color: #fff;
             padding: 10px 20px;
             font-size: 16px;
-            min-width: 300px;
+            flex: 1;
+            min-width: 0;
         }
         button,
-        input[type="submit"] {
+        input[type="submit"],
+        .nav-button {
             background-color: #5E35B1;
             color: #FFFFFF;
             padding: 10px 20px;
@@ -86,6 +92,11 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+        }
+        .nav-button {
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
         }
         .empty-container {
             border: 1px solid #5E35B1;
@@ -123,10 +134,12 @@
                 <option value="author" {% if sort_by == 'author' %}selected{% endif %}>Author</option>
             </select>
         </form>
-        <form method="GET" action="/">
+        <form class="search-form" method="GET" action="/">
           <input type="text" name="q" placeholder="Search books..." value="{{ q }}">
           <button type="submit">Search</button>
         </form>
+        <a class="nav-button" href="/add_book">Add Book</a>
+        <a class="nav-button" href="/add_author">Add Author</a>
     </div>
     {% if books %}
         <div class="container">
